@@ -9,7 +9,8 @@ const eventRoutes = require('../routes/events');
 const feedbackRoutes = require('../routes/feedback');
 const voteRoutes = require('../routes/vote');
 
-dotenv.config();
+// dotenv.config();
+dotenv.config({ path: require('path').resolve(__dirname, '../.env') });
 
 const app = express();
 app.use(cors());
