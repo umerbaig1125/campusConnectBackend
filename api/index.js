@@ -1,5 +1,4 @@
-// const app = require('../server');
-// module.exports = app;
+// backend/api/index.js
 
 const express = require('express');
 const connectDB = require('../db');
@@ -31,6 +30,11 @@ app.use('/api/events', eventRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/vote', voteRoutes);
+
+// Root route to avoid "Cannot GET /"
+app.get('/', (req, res) => {
+    res.send('Welcome to the Campus Connect Backend API!');
+});
 
 // Export the app to be used by Vercel serverless functions
 module.exports = app;
