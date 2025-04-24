@@ -29,8 +29,11 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/vote', voteRoutes);
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`✅ Server is running on port ${PORT}`);
-});
+// ✅ Vercel requires you to export the app
+module.exports = app;
+
+// // Server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//     console.log(`✅ Server is running on port ${PORT}`);
+// });
