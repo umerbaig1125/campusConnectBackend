@@ -6,32 +6,32 @@ const EventRegistration = require('../models/EventRegistration');
 const upload = require('../middleware/upload');
 
 // Create a new event
-// router.post('/', async (req, res) => {
-//     const { name, venue, description, date, time, image, societyName, createdBy, role } = req.body;
+router.post('/', async (req, res) => {
+    const { name, venue, description, date, time, image, societyName, createdBy, role } = req.body;
 
-//     if (!name || !venue || !description || !date || !time || !image || !societyName || !createdBy || !role) {
-//         return res.status(400).json({ message: 'All fields are required.' });
-//     }
+    if (!name || !venue || !description || !date || !time || !image || !societyName || !createdBy || !role) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
 
-//     try {
-//         const event = new Event({
-//             name,
-//             venue,
-//             description,
-//             date,
-//             time,
-//             image,
-//             societyName,
-//             createdBy,  // Save the username who created the event
-//             role,  // Save the user's role who created the event
-//         });
-//         await event.save();
-//         res.status(201).json({ message: 'Event created successfully', event });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: 'Failed to create event' });
-//     }
-// });
+    try {
+        const event = new Event({
+            name,
+            venue,
+            description,
+            date,
+            time,
+            image,
+            societyName,
+            createdBy,  // Save the username who created the event
+            role,  // Save the user's role who created the event
+        });
+        await event.save();
+        res.status(201).json({ message: 'Event created successfully', event });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to create event' });
+    }
+});
 
 router.post('/api/events', upload.single('image'), async (req, res) => {
     try {
