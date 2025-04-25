@@ -6,7 +6,7 @@ const EventRegistration = require('../models/EventRegistration');
 const upload = require('../middleware/upload');
 
 // Create a new event
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
     const { name, venue, description, date, time, image, societyName, createdBy, role } = req.body;
 
     if (!name || !venue || !description || !date || !time || !image || !societyName || !createdBy || !role) {
@@ -30,30 +30,6 @@ router.post('/', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Failed to create event' });
-    }
-});
-
-router.post('/api/events', upload.single('image'), async (req, res) => {
-    try {
-        const { name, venue, description, date, time, societyName, createdBy, role } = req.body;
-        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-
-        const newEvent = new Event({
-            name,
-            venue,
-            description,
-            date,
-            time,
-            image: imageUrl,
-            societyName,
-            createdBy,
-            role
-        });
-
-        await newEvent.save();
-        res.status(201).json(newEvent);
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to create event', error });
     }
 });
 
