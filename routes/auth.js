@@ -97,7 +97,7 @@ router.post('/forgot-password', async (req, res) => {
         });
 
         const mailOptions = {
-            from: `"Support Team" <${process.env.EMAIL_USER}>`,
+            from: `"Campus Connnect Support Team"`,
             to: email,
             subject: 'CampusConnect OTP Code',
             text: `Your OTP code for CampusConnect is ${otp}. It is valid for 10 minutes.`,
