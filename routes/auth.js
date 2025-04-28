@@ -15,6 +15,8 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) =>
         cb(null, Date.now() + path.extname(file.originalname)),
 });
+
+const upload = multer({ dest: 'uploads/' });
 // const upload = multer({ storage });
 
 // Signup Route
@@ -139,21 +141,35 @@ router.post('/confirm-password', async (req, res) => {
 });
 
 // Update Profile
+// router.put('/update-profile/:id', upload.single('image'), async (req, res) => {
+//     try {
+//         const { name, email } = req.body;
+//         const updateData = { name, email };
+
+//         if (req.file) {
+//             updateData.imageUrl = `/uploads/${req.file.filename}`;
+//         }
+
+//         const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+//         res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// });
+
 router.put('/update-profile/:id', upload.single('image'), async (req, res) => {
     try {
         const { name, email } = req.body;
-        const updateData = { name, email };
+        const image = req.file; // uploaded image file
 
-        if (req.file) {
-            updateData.imageUrl = `/uploads/${req.file.filename}`;
-        }
+        // Update the user logic here (e.g., save to DB)
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
-
-        res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+        res.status(200).json({ message: 'Profile updated', user: updatedUser });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Error updating profile:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
