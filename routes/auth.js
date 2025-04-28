@@ -138,35 +138,21 @@ router.post('/confirm-password', async (req, res) => {
 });
 
 // Update Profile
-// router.put('/update-profile/:id', upload.single('image'), async (req, res) => {
-//     try {
-//         const { name, email } = req.body;
-//         const updateData = { name, email };
-
-//         if (req.file) {
-//             updateData.imageUrl = `/uploads/${req.file.filename}`;
-//         }
-
-//         const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
-
-//         res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
 router.put('/update-profile/:id', upload.single('image'), async (req, res) => {
     try {
         const { name, email } = req.body;
-        const image = req.file; // uploaded image file
+        const updateData = { name, email };
 
-        // Update the user logic here (e.g., save to DB)
+        if (req.file) {
+            updateData.imageUrl = `/uploads/${req.file.filename}`;
+        }
 
-        res.status(200).json({ message: 'Profile updated', user: updatedUser });
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+        res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
     } catch (error) {
-        console.error('Error updating profile:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
