@@ -16,9 +16,6 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname)),
 });
 
-const upload = multer({ dest: 'uploads/' });
-// const upload = multer({ storage });
-
 // Signup Route
 router.post('/signup', async (req, res) => {
     const { name, email, password, role } = req.body;
